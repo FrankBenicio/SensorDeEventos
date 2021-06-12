@@ -1,0 +1,29 @@
+version: '3.4'
+
+services: 
+
+  sensordeeventos.api:
+    image: ${DOCKER_REGISTRY-}sensordeeventosapi
+    build:
+      context: .
+      dockerfile: SensorDeEventos.API/Dockerfile
+    ports:
+      - "8090:80"
+    container_name: sensordeeventos.api
+    hostname: sensordeeventos.api
+
+  sensordeeventos.web:
+    image: ${DOCKER_REGISTRY-}sensordeeventosweb
+    build:
+      context: .
+      dockerfile: SensorDeEventos.Web/Dockerfile
+    ports:
+      - "8091:443"
+    depends_on:
+      - sensordeeventos.api
+    links:
+      - "sensordeeventos.api:sensordeeventosapi"
+    container_name: sensordeeventos.web
+    hostname: sensordeeventos.web
+
+
