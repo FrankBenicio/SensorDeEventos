@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Microsoft.Extensions.Configuration;
+using RestSharp;
 using SensorDeEventos.Web.Models.Dto;
 using SensorDeEventos.Web.Models.ViewModel;
 using System.Collections.Generic;
@@ -10,10 +11,16 @@ namespace SensorDeEventos.Web.Services
 {
     public class SensorDeEventosServices
     {
-        private readonly string Uri = "http://sensordeeventosapi:8090";
+        private readonly string Uri;
+
+        public SensorDeEventosServices(IConfiguration configuration)
+        {
+            Uri = configuration["UriSensoApi"];
+        }
 
         public async Task<List<EventoViewModel>> GetAll()
         {
+
             var client = new RestClient(Uri);
 
             var request = new RestRequest("/api/eventos", Method.GET) { RequestFormat = DataFormat.Json };

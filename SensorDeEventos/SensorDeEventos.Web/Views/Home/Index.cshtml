@@ -2,7 +2,104 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary btn-block" onclick="getGraficoPorRegiao();">
+                    Gerar gráfico por região
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-block btn-outline-primary" onclick="getGraficoPorSensor();">
+                    Gerar gráfico por sensor
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-5">
+        <div id="container"></div>
+    </div>
 </div>
+
+
+@section Scripts{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+        function carregarGrafico(dados, title, nameSerie) {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: title
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total'
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> de total<br/>'
+                },
+
+                series: [
+                    {
+                        name: nameSerie,
+                        colorByPoint: true,
+                        data: dados
+                    }
+                ]
+            });
+        }
+    </script>
+
+    <script>
+
+         $(document).ready(() => {
+             getGraficoPorRegiao();
+        });
+
+        function getGraficoPorRegiao() {
+            $.get("@Url.Action("GerarGraficoPorRegiao", "Grafico")",
+                function (data)
+                {
+                    carregarGrafico(data, "Gráfico por região", "Região");
+
+                });
+        }
+
+        function getGraficoPorSensor() {
+            $.get("@Url.Action("GerarGraficoPorSensor", "Grafico")",
+                function (data)
+                {
+                    carregarGrafico(data, "Gráfico por sensor", "Sensor");
+
+                });
+        }
+    </script>
+}

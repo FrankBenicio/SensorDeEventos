@@ -19,11 +19,7 @@ namespace SensorDeEventos.API.Controllers
             {
                 var eventos = await listarEventos.Executar();
 
-                return Ok(new
-                {
-                    eventos
-
-                });
+                return new ObjectResult(eventos);
             }
             catch (Exception e)
             {

@@ -4,68 +4,89 @@
     ViewData["Title"] = "Eventos";
 }
 
-<h1>Eventos</h1>
+<div class="row">
+    <div class="col-md-12">
+        <h4>
+            @ViewData["Title"]
+        </h4>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pais)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Regiao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sensor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataEHora)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Regiao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sensor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEHora)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="col-md-12">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Pais)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Regiao)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Sensor)
+                                </th>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.Valor)
+                                </th>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.Status)
+                                </th>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.DataDeEntrada)
+                                </th>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.HorarioDeEntrada)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Pais)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Regiao)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Sensor)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Valor)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.DataDeEntrada)
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.HorarioDeEntrada)
+                                        </td>
+                                    </tr>
+                                }
+
+
+
+                            }
+                            else
+                            {
+
+                                <tr>
+                                    <td colspan="7">Você ainda não possui nenhum registro de evento.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

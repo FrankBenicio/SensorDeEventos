@@ -4,6 +4,8 @@ services:
 
   sensordeeventos.api:
     image: ${DOCKER_REGISTRY-}sensordeeventosapi
+    environment:
+      SensorDeEventosContexto: "Server=192.168.1.34,1433;Database=SensorDeEventos;User=sa;Password=1234"
     build:
       context: .
       dockerfile: SensorDeEventos.API/Dockerfile
@@ -14,11 +16,13 @@ services:
 
   sensordeeventos.web:
     image: ${DOCKER_REGISTRY-}sensordeeventosweb
+    environment:
+      UriSensoApi: "http://sensordeeventosapi"
     build:
       context: .
       dockerfile: SensorDeEventos.Web/Dockerfile
     ports:
-      - "8091:443"
+      - "8091:80"
     depends_on:
       - sensordeeventos.api
     links:

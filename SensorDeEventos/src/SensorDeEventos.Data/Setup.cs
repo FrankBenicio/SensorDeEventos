@@ -10,7 +10,7 @@ namespace SensorDeEventos.Data
     {
         public static void AdicionarContexto(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<SensorDeEventosContexto>(x => x.EnableSensitiveDataLogging().UseSqlServer(configuration.GetConnectionString("SensorDeEventosContexto")));
+            services.AddDbContext<SensorDeEventosContexto>(x => x.EnableSensitiveDataLogging().UseSqlServer(configuration["SensorDeEventosContexto"]));
         }
         public static void MigrationInitialisation(this IApplicationBuilder app)
         {

@@ -1,17 +1,24 @@
 ﻿using SensorDeEventos.Web.Models.ViewModel;
 using System;
+using System.Text.Json.Serialization;
+
 namespace SensorDeEventos.Web.Models.Dto
 {
     public class EventoDto
     {
+        [JsonPropertyName("id")]
         public Guid Id { get; set; }
 
+        [JsonPropertyName("tag")]
         public string Tag { get; set; }
 
+        [JsonPropertyName("valor")]
         public string Valor { get; set; }
 
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
+        [JsonPropertyName("dataEHora")]
         public DateTime DataEHora { get; set; }
 
         public static implicit operator EventoViewModel(EventoDto evento)
@@ -23,7 +30,8 @@ namespace SensorDeEventos.Web.Models.Dto
                 Pais = evento.Tag.Split(".")[0],
                 Regiao = evento.Tag.Split(".")[1],
                 Sensor = evento.Tag.Split(".")[2],
-                DataEHora = evento.DataEHora,
+                DataDeEntrada = evento.DataEHora.ToString("d"),
+                HorarioDeEntrada = evento.DataEHora.ToString("t"),
                 Status = evento.Status,
                 Valor = ConverterValorParaInteiro(evento.Valor)
             };
